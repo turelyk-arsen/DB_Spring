@@ -41,11 +41,35 @@ public class BookDaoImplTests {
 	
 	@Test
 	public void testThatFindOneBookGeneratesCorrectSql() {
-		underTest.find("978-1-23");
+		underTest.findOne("978-1-23");
 		verify(jdbcTemplate).query(
 				eq("SELECT isbn, title, author_id FROM books WHERE isbn = ? LIMIT 1"),
 				ArgumentMatchers.<BookDaoImpl.BookRowMapper>any(),
 				eq("978-1-23"));
+	}
+	
+	@Test
+	public void testThatFindGeneratesCorrectSql() {
+		underTest.find();
+		verify(jdbcTemplate).query(
+				eq("SELECT isbn, title, author_id FROM books"),
+				ArgumentMatchers.<BookDaoImpl.BookRowMapper>any());
+	}
+	
+	@Test
+	public void testThatUpdateGeneratesCorrectSql() {
+		Book book = TestDataUtil.createTestBook();
+		underTest.update("978-1-23", book);
+		
+		verify(jdbcTemplate).update(
+				"UPDATE books SET isbn = ?, title = ?, author_id = ? WHERE isbn = ?", 
+				"978-1-23", "The shadow", 1L, "978-1-23");
+	}
+	
+	@Test
+	public void testThatDeleteGeneratesCorrectSql() {
+		underTest.delete("978-1-23");
+		verify(jdbcTemplate).update("DELETE FROM books WHERE isbn = ?", "978-1-23");
 	}
 	
 	
