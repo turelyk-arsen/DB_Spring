@@ -33,25 +33,25 @@ public final class TestDataUtil {
 				.build();
 	}
 	
-	public static Book createTestBook() {
+	public static Book createTestBook(final Author author) {
 		return Book.builder()
 				.isbn("978-1-23")
 				.title("The shadow")
-				.authorId(1L)
+				.author(author)
 				.build();
 	}
-	public static Book createTestBookA() {
+	public static Book createTestBookA(final Author author) {
 		return Book.builder()
 				.isbn("978-1-55")
 				.title("Beyond the horizon")
-				.authorId(1L)
+				.author(author)
 				.build();
 	}
-	public static Book createTestBookB() {
+	public static Book createTestBookB(final Author author) {
 		return Book.builder()
 				.isbn("978-1-76")
 				.title("The last ember")
-				.authorId(1L)
+				.author(author)
 				.build();
 	}
 	
